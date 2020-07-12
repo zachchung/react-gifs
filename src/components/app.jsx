@@ -12,11 +12,13 @@ class App extends Component {
     super(props);
 
     this.state = {
-      gifs: [],
+      gifs: [], // gifs change when user changes search
       selectedGifId: "xT9IgDEI1iZyb2wqo8"
     };
   }
 
+  // search-4 (app.js -> seach_bar.js)
+  // search function/ API call:
   search = (query) => {
     giphy({ apiKey: GIPHY_API_KEY, https: true })
       .search({
@@ -25,11 +27,12 @@ class App extends Component {
         limit: 10
       }, (err, result) => {
         this.setState({
-          gifs: result.data
+          gifs: result.data // search results -> update the state
         });
       });
   }
 
+  // selectGif (app.js -> gif.js -> gif_list.js)
   selectGif = (id) => {
     this.setState({
       selectedGifId: id
@@ -40,13 +43,13 @@ class App extends Component {
     return (
       <div>
         <div className="left-scene">
-          <SearchBar searchFunction={this.search} />
+          <SearchBar searchFunction={this.search} /> {/* search-3: pass seach Function to child */}
           <div className="selected-gif">
-            <Gif id={this.state.selectedGifId} />
+            <Gif id={this.state.selectedGifId} /> {/* this.state.selectedFigId?????... selectGif-3 */}
           </div>
         </div>
         <div className="right-scene">
-          <GifList gifs={this.state.gifs} selectGif={this.selectGif} />
+          <GifList gifs={this.state.gifs} selectGif={this.selectGif} /> {/* pass gifs & selectGif Function to child */}
         </div>
       </div>
     );
